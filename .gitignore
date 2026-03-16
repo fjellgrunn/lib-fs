@@ -10,3 +10,5 @@ data/
 .vitest-cache/
 tsconfig.build.json
 .env
+
+.kodrdriv*
