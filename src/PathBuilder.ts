@@ -144,9 +144,20 @@ export class PathBuilder {
         return { kt: kt as any, pk: lastPart };
       }
 
-      // Complex case: composite key with locations
-      // This is a simplified implementation
-      logger.warning('parsePathToKey for composite keys not fully implemented', { filePath });
+      // Composite key: [dir, lk, dir, lk, ..., dir, pk]
+      if (parts.length >= 4 && parts.length % 2 === 0) {
+        const locations: any[] = [];
+        for (let i = 0; i < parts.length - 2; i += 2) {
+          locations.push({
+            kt: this.getKeyTypeByDirectory(parts[i]),
+            lk: parts[i + 1],
+          });
+        }
+        const kt = this.getKeyTypeByDirectory(parts[parts.length - 2]);
+        return { kt: kt as any, pk: lastPart, loc: locations as any };
+      }
+
+      logger.warning('parsePathToKey could not parse path structure', { filePath, parts });
       return null;
     } catch (error) {
       logger.error('Failed to parse path to key', { filePath, error });
@@ -183,8 +194,8 @@ export class PathBuilder {
    */
   private getKeyTypeByDirectory(directory: string): string {
     const index = this.directoryPaths.indexOf(directory);
-    if (index !== -1) {
-      return this.directoryPaths[index];
+    if (index !== -1 && this.kta[index]) {
+      return this.kta[index];
     }
     return directory;
   }
