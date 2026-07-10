@@ -161,7 +161,7 @@ describe('PathBuilder', () => {
       const key = builder.parsePathToKey(filePath);
 
       expect(key).toBeDefined();
-      expect(key?.kt).toBe('users');
+      expect(key?.kt).toBe('user');
       expect(key?.pk).toBe('alice-123');
     });
 
@@ -180,7 +180,7 @@ describe('PathBuilder', () => {
       expect(key?.pk).toBe('alice-123');
     });
 
-    it('should return null for composite keys (not fully implemented)', () => {
+    it('should parse composite keys from path', () => {
       const builder = new PathBuilder({
         globalDirectory: '/data/myapp',
         directoryPaths: ['posts', 'comments'],
@@ -188,12 +188,15 @@ describe('PathBuilder', () => {
         useJsonExtension: true,
       });
 
-      // Complex path with locations - not fully implemented
+      // Complex path with locations
       const filePath = path.join('/data/myapp', 'posts', 'post-1', 'comments', 'comment-1.json');
       const key = builder.parsePathToKey(filePath);
 
-      // Currently returns null for composite keys
-      expect(key).toBeNull();
+      expect(key).toEqual({
+        kt: 'comment',
+        pk: 'comment-1',
+        loc: [{ kt: 'post', lk: 'post-1' }],
+      });
     });
 
     it('should return null for invalid path', () => {
