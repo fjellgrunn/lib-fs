@@ -8,18 +8,21 @@ Filesystem persistence library for Fjell framework.
 
 ## Overview
 
-Store Fjell Items as JSON files in the local filesystem with full support for the Fjell Operations interface. Perfect for local development, testing, and desktop applications.
+Store Fjell Items as JSON files in the local filesystem with support for the Fjell Operations CRUD interface. Perfect for local development, testing, and desktop applications.
 
 ## Features
 
-- ✅ Full Operations interface implementation
-- ✅ Primary and Contained items support
-- ✅ **File attachments support** (same API as lib-gcs)
-- ✅ Custom finders, actions, and facets
+- ✅ Primary and Contained items CRUD (`get`, `create`, `update`, `upsert`, `remove`, `all`, `one`)
 - ✅ Type-safe with TypeScript
 - ✅ Hierarchical storage on filesystem
-- ✅ Direct filesystem access
-- ✅ No external dependencies (uses Node.js built-ins)
+- ✅ Direct filesystem access (Node.js built-ins)
+
+### Not yet implemented
+
+These are planned (see [CHANGELOG.md](./CHANGELOG.md) Next Steps and open issues) but **not** shipped yet:
+
+- ❌ File attachments API (parity with `@fjell/lib-gcs`)
+- ❌ Custom finders, actions, and facets
 
 ## Installation
 
@@ -61,7 +64,7 @@ const user = await userLib.operations.create({
 - ✅ Build-time data storage
 - ✅ Configuration management
 - ✅ Prototyping
-- ✅ Development alternative to lib-gcs
+- ✅ Development alternative to lib-gcs (CRUD only today)
 
 ## Documentation
 
@@ -74,5 +77,3 @@ Apache-2.0
 ## Author
 
 Fjell Team
-
-TEST
