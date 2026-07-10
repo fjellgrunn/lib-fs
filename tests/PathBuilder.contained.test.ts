@@ -75,7 +75,7 @@ describe('PathBuilder - Contained Items Support', () => {
       const locations = builder.parseLocationsFromPath(filePath);
 
       expect(locations).toHaveLength(1);
-      expect(locations[0].kt).toBe('posts');
+      expect(locations[0].kt).toBe('post');
       expect(locations[0].lk).toBe('post-123');
     });
 
@@ -97,8 +97,8 @@ describe('PathBuilder - Contained Items Support', () => {
       const locations = builder.parseLocationsFromPath(filePath);
 
       expect(locations).toHaveLength(2);
-      expect(locations[0]).toEqual({ kt: 'posts', lk: 'post-1' });
-      expect(locations[1]).toEqual({ kt: 'comments', lk: 'comment-1' });
+      expect(locations[0]).toEqual({ kt: 'post', lk: 'post-1' });
+      expect(locations[1]).toEqual({ kt: 'comment', lk: 'comment-1' });
     });
 
     it('should return empty array for primary item path', () => {
